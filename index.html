@@ -9,9 +9,14 @@
     <h1>Calculator</h1>
     <div class="container">
         <div class="display">
-            <h1 id="displayfield">0+2</h1>
+            <h1 class="previous"></h1>
+            <h1 class="current">0</h1>
         </div>
-        <div class="numbers">
+        <div class="calculator-keys">
+            <button id="+" class="key-operator">+</button>
+            <button id="-" class="key-operator">-</button>
+            <button id="*" class="key-operator">*</button>
+            <button id="/" class="key-operator" >/</button>
             <button id="1" class="number-button">1</button>
             <button id="2" class="number-button">2</button>
             <button id="3" class="number-button">3</button>
@@ -22,15 +27,9 @@
             <button id="8" class="number-button">8</button>
             <button id="9" class="number-button">9</button>
             <button id="0" class="number-button">0</button>
-        </div>
-        <div class="operators">
-            <button id="+">+</button>
-            <button id="-">-</button>
-            <button id="*">*</button>
-            <button id="/">/</button>
-            <button id="=">=</button>
-            <button id=".">.</button>
-            <button id=".">clear</button>
+            <button id="=" class='equal'>=</button>
+            <button id="." class="decimal">.</button>
+            <button class="clear">clear</button>
         </div>
     </div>
     

@@ -1,45 +1,90 @@
+let currentScreen = document.querySelector('.current');
+let previousScreen = document.querySelector('.previous');
+let numberButtons = document.querySelectorAll('.number-button');
+let operators = document.querySelectorAll('.key-operator');
+let clear = document.querySelector('.clear');
+let equal = document.querySelector('.equal');
+let decimal = document.querySelector('decimal');
 
-let x , y, operator;
-let displayValue
+let previousValue ='';
+let currentValue= '';
+let operator='';
+let displayValue='';
 
-function add(x, y){
-    return x + y
+//basic math formula and operate to tie it together
+function add(previousValue, currentValue){
+    return previousValue + currentValue;
 }
 
-function subtract(x, y){
-    return x - y
+function subtract(previousValue, currentValue){
+    return previousValue - currentValue;
 }
 
-function multiply(x,y){
-    return x * y
+function multiply(previousValue,currentValue){
+    return previousValue * currentValue;
 }
 
-function divide(x,y){
-    return x / y
+function divide(previousValue,currentValue){
+    return previousValue / currentValue;
 }
 
-function operate(x, y, operator){
+function operate(previousValue, currentValue, operator){
     switch(operator){
         case '+':
-            return add(Number(x), Number(y));
+            return add(Number(previousValue), Number(currentValue));
         case '-':
-            return subtract(Number(x), Number(y));
+            return subtract(Number(previousValue), Number(currentValue));
         case '*':
-            return multiply(Number(x), Number(y));
+            return multiply(Number(previousValue), Number(currentValue));
         case '/':
-            return divide(Number(x), Number(y));
+            return divide(Number(previousValue), Number(currentValue));
         default:
-            return undefined
+            return undefined;
     }
 }
 
+numberButtons.forEach(button => button.addEventListener('click', function(e){
+    handleNumber(e.target.textContent)
+    currentScreen.textContent = displayValue;
+}))
 
-    let displayField = document.querySelector('#displayfield');
-    let buttons = document.querySelectorAll('button');
+function handleNumber(num){
+    //if determins if its the first input or after an operator has been called
+    if(previousValue != '' &&currentValue.length <=5 ){
+        currentValue += num;
+        displayValue = previousValue + ' ' + operator + ' ' + currentValue;
+        console.log('cur', currentValue)
+    }else if(currentValue.length <=5){
+        currentValue += num;
+        displayValue =currentValue;
+        console.log('cur', currentValue)
+    }
+}
 
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e){
-            displayField.innerHTML += ` ${e.target.id} `; 
-            console.log('hello')
-        })
-    })
+operators.forEach(op => op.addEventListener('click', function(e){
+    // if prevents multiple operators
+    if(previousValue ==''){
+        handleOperator(e.target.textContent)
+        currentScreen.textContent = previousValue + " " + operator;
+    }
+    // previousScreen.textContent = previousValue + operator;
+}))
+
+function handleOperator(op){
+    console.log(op)
+        operator = op;
+        //sets current value to the previous value and empties current for new input
+        previousValue = currentValue;
+        currentValue = '';
+        console.log('prev',previousValue)
+}
+
+clear.addEventListener('click', function(){
+    previousValue = '';
+    currentValue = '';
+    operator = '';
+    displayValue = '';
+    currentScreen.textContent = '0';
+    // previousScreen.textContent = currentValue;
+})
+
