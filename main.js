@@ -12,36 +12,21 @@ let operator='';
 let displayValue='';
 
 //basic math formula and operate to tie it together
-function add(previousValue, currentValue){
-    return previousValue + currentValue;
-}
+// function add(previousValue, currentValue){
+//     return previousValue + currentValue;
+// }
 
-function subtract(previousValue, currentValue){
-    return previousValue - currentValue;
-}
+// function subtract(previousValue, currentValue){
+//     return previousValue - currentValue;
+// }
 
-function multiply(previousValue,currentValue){
-    return previousValue * currentValue;
-}
+// function multiply(previousValue,currentValue){
+//     return previousValue * currentValue;
+// }
 
-function divide(previousValue,currentValue){
-    return previousValue / currentValue;
-}
-
-function operate(previousValue, currentValue, operator){
-    switch(operator){
-        case '+':
-            return add(Number(previousValue), Number(currentValue));
-        case '-':
-            return subtract(Number(previousValue), Number(currentValue));
-        case '*':
-            return multiply(Number(previousValue), Number(currentValue));
-        case '/':
-            return divide(Number(previousValue), Number(currentValue));
-        default:
-            return undefined;
-    }
-}
+// function divide(previousValue,currentValue){
+//     return previousValue / currentValue;
+// }
 
 numberButtons.forEach(button => button.addEventListener('click', function(e){
     handleNumber(e.target.textContent)
@@ -53,7 +38,7 @@ function handleNumber(num){
     if(previousValue != '' &&currentValue.length <=5 ){
         currentValue += num;
         displayValue = previousValue + ' ' + operator + ' ' + currentValue;
-        console.log('cur', currentValue)
+        console.log('new cur', currentValue)
     }else if(currentValue.length <=5){
         currentValue += num;
         displayValue =currentValue;
@@ -88,3 +73,25 @@ clear.addEventListener('click', function(){
     // previousScreen.textContent = currentValue;
 })
 
+equal.addEventListener('click', function(e){
+    operate()
+})
+
+function operate(){
+    previousValue = Number(previousValue);
+    currentValue = Number(currentValue);
+
+    if(operator === '+'){
+        previousValue += currentValue;  
+    }else if(operator === '-'){
+        previousValue == currentValue; 
+    }else if(operator === 'x'){
+        previousValue *= currentValue; 
+    }else if(operator === '+'){
+        previousValue += currentValue;
+    }else{
+        previousValue /= currentValue;
+    }
+
+    console.log('sum', previousValue)
+}
