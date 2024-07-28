@@ -4,29 +4,12 @@ let numberButtons = document.querySelectorAll('.number-button');
 let operators = document.querySelectorAll('.key-operator');
 let clear = document.querySelector('.clear');
 let equal = document.querySelector('.equal');
-let decimal = document.querySelector('decimal');
+let decimal = document.querySelector('.decimal');
 
 let previousValue ='';
 let currentValue= '';
 let operator='';
 let displayValue='';
-
-//basic math formula and operate to tie it together
-// function add(previousValue, currentValue){
-//     return previousValue + currentValue;
-// }
-
-// function subtract(previousValue, currentValue){
-//     return previousValue - currentValue;
-// }
-
-// function multiply(previousValue,currentValue){
-//     return previousValue * currentValue;
-// }
-
-// function divide(previousValue,currentValue){
-//     return previousValue / currentValue;
-// }
 
 numberButtons.forEach(button => button.addEventListener('click', function(e){
     handleNumber(e.target.textContent)
@@ -35,11 +18,11 @@ numberButtons.forEach(button => button.addEventListener('click', function(e){
 
 function handleNumber(num){
     //if determins if its the first input or after an operator has been called
-    if(previousValue != '' &&currentValue.length <=5 ){
+    if(previousValue != '' &&currentValue.length <=7 ){
         currentValue += num;
         displayValue = previousValue + ' ' + operator + ' ' + currentValue;
         console.log('new cur', currentValue)
-    }else if(currentValue.length <=5){
+    }else if(currentValue.length <=7){
         currentValue += num;
         displayValue =currentValue;
         console.log('cur', currentValue)
@@ -48,7 +31,7 @@ function handleNumber(num){
 
 operators.forEach(op => op.addEventListener('click', function(e){
     // if prevents multiple operators
-    if(previousValue ==''){
+    if(previousValue === ''){
         handleOperator(e.target.textContent)
         currentScreen.textContent = previousValue + " " + operator;
     }
@@ -73,8 +56,18 @@ clear.addEventListener('click', function(){
     // previousScreen.textContent = currentValue;
 })
 
-equal.addEventListener('click', function(e){
-    operate()
+equal.addEventListener('click', function(){
+    if(previousValue && currentValue && operator){
+        operate()
+        if(previousValue.length <=7){
+            currentScreen.textContent = previousValue;
+        } else{
+            currentScreen.textContent = previousValue.slice(0, 7) + '...'
+        }
+        currentValue = currentScreen.textContent;
+        previousValue ='';
+        operator = '';
+    }
 })
 
 function operate(){
@@ -93,5 +86,23 @@ function operate(){
         previousValue /= currentValue;
     }
 
-    console.log('sum', previousValue)
+    previousValue = roundNumber(previousValue)
+    previousValue = previousValue.toString();
+    currentValue = currentValue.toString();
+    console.log('sum', previousValue);
+}
+
+function roundNumber(num){
+    return Math.round(num * 1000) / 1000;
+}
+
+decimal.addEventListener('click', function(){
+    showDecimal()
+})
+
+function showDecimal(){
+    if(!currentValue.includes('.')){
+        currentValue += '.'
+        currentScreen.textContent = previousValue + ' ' + operator + ' ' + currentValue
+    }
 }
